@@ -1,11 +1,13 @@
 import pandas as pd
 import numpy as np
+from pyecharts.types import Label
 from scipy.sparse.linalg import interface
 from sklearn.linear_model import LinearRegression
 import pyecharts.options as opts
 from pyecharts.render import make_snapshot
-from snapshot_phantomjs import snapshot
+#from snapshot_phantomjs import snapshot
 from pyecharts.charts import Line
+from matplotlib import pyplot as plt
 from decimal import Decimal
 
 
@@ -45,7 +47,7 @@ if __name__ == '__main__':
     print(lerror)
     formula = '校准曲线公式： V实=%s+%s×V示'%(to_decimal(intercept, dcm), to_decimal(coef, dcm))
     print(formula)
-
+'''
 #绘图
     x_data = range(5,30,5)
     y_data = coef * x_data +intercept
@@ -73,8 +75,37 @@ if __name__ == '__main__':
         .render()
     )
 print(line)
-make_snapshot(snapshot, line.render(), "report.png")
+#make_snapshot(snapshot, line.render(), "report.png")
 
+'''
+x_data = range(1,31,5)
+y_data = coef * x_data +intercept
+
+plt.figure('Grid', figsize = (6,6),dpi = 100)
+plt.title("校准曲线",fontsize=20, fontproperties="SimHei")
+plt.xlabel("风表示值Vz（格） ",fontsize=14, fontproperties="SimHei")
+plt.ylabel("实际风速值Vs（m/s)",fontsize=14, fontproperties="SimHei")
+
+ax = plt.gca()
+ax.xaxis.set_major_locator(plt.MultipleLocator(5.0))
+ax.xaxis.set_minor_locator(plt.MultipleLocator(1))
+
+ax.yaxis.set_major_locator(plt.MultipleLocator(5.0))
+ax.yaxis.set_minor_locator(plt.MultipleLocator(1))
+
+
+#紧凑布局
+plt.tight_layout()
+
+ax.grid(which='major',axis="both",linewidth=0.25,linestyle='-',color='gray')
+
+ax.grid(which='minor',axis="both",linewidth=0.25,linestyle='-',color='gray')
+
+plt.plot(x_data, y_data,Label='回归曲线')
+
+plt.legend()
+
+plt.show()
 #加编号
 #命名规则
 #公司名称设置 加密算法https://blog.csdn.net/weixin_40406241/article/details/89321011
