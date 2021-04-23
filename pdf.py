@@ -1,13 +1,15 @@
+# encoding: utf-8
+
 from xhtml2pdf import pisa             # import python module
 from bs4 import BeautifulSoup
-
+import pdfkit
 
 # Define your data
 path = 'test.html'
 htmlfile = open(path, 'r', encoding='utf-8')
 htmlhandle = htmlfile.read()
-htmlhandle += 'hello'
-source_html = "<html><body><p>To PDF or not to PDF</p></body></html>"
+
+source_html = ""
 output_filename = "test.pdf"
 
 # Utility function
@@ -29,5 +31,9 @@ def convert_html_to_pdf(source_html, output_filename):
 # Main program
 if __name__ == "__main__":
     pisa.showLogging()
-    print(htmlhandle)
+    #print(htmlhandle)
     convert_html_to_pdf(htmlhandle , output_filename)
+
+
+
+    pdfkit.from_file('test.html', 'test.pdf')
