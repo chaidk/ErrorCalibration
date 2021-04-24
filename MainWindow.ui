@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>980</width>
-    <height>562</height>
+    <width>973</width>
+    <height>763</height>
    </rect>
   </property>
   <property name="font">
@@ -16,7 +16,11 @@
    </font>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>非线性误差校准工具</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>icon.png</normaloff>icon.png</iconset>
   </property>
   <property name="styleSheet">
    <string notr="true">QPushButton
@@ -727,7 +731,7 @@ border-color: rgb(255, 255, 255);
         </widget>
        </item>
        <item row="10" column="2">
-        <widget class="QLineEdit" name="lineEdit_28">
+        <widget class="QLineEdit" name="input_72">
          <property name="font">
           <font>
            <family>微软雅黑</family>
@@ -839,37 +843,13 @@ border-color: rgb(255, 255, 255);
      </item>
     </layout>
    </widget>
-   <widget class="QWebEngineView" name="browser">
-    <property name="geometry">
-     <rect>
-      <x>970</x>
-      <y>270</y>
-      <width>500</width>
-      <height>499</height>
-     </rect>
-    </property>
-    <property name="maximumSize">
-     <size>
-      <width>500</width>
-      <height>500</height>
-     </size>
-    </property>
-    <property name="styleSheet">
-     <string notr="true"/>
-    </property>
-    <property name="url">
-     <url>
-      <string>about:blank</string>
-     </url>
-    </property>
-   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>980</width>
+     <width>973</width>
      <height>23</height>
     </rect>
    </property>
@@ -925,16 +905,10 @@ border-color: rgb(255, 255, 255);
    </property>
   </action>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>QWebEngineView</class>
-   <extends>QWidget</extends>
-   <header location="global">QtWebEngineWidgets/QWebEngineView</header>
-  </customwidget>
- </customwidgets>
  <tabstops>
   <tabstop>input_01</tabstop>
   <tabstop>input_02</tabstop>
+  <tabstop>input_03</tabstop>
   <tabstop>btn_reg</tabstop>
   <tabstop>input_11</tabstop>
   <tabstop>input_12</tabstop>
@@ -955,7 +929,7 @@ border-color: rgb(255, 255, 255);
   <tabstop>input_62</tabstop>
   <tabstop>input_63</tabstop>
   <tabstop>input_71</tabstop>
-  <tabstop>lineEdit_28</tabstop>
+  <tabstop>input_72</tabstop>
   <tabstop>input_73</tabstop>
   <tabstop>input_81</tabstop>
   <tabstop>input_82</tabstop>
@@ -976,20 +950,53 @@ border-color: rgb(255, 255, 255);
    <sender>btn_reg</sender>
    <signal>clicked()</signal>
    <receiver>MainWindow</receiver>
-   <slot>regression()</slot>
+   <slot>start()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>117</x>
-     <y>184</y>
+     <x>852</x>
+     <y>118</y>
     </hint>
     <hint type="destinationlabel">
-     <x>262</x>
-     <y>411</y>
+     <x>844</x>
+     <y>624</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_4</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>489</x>
+     <y>280</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btn_gen</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>generate()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>680</x>
+     <y>518</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>712</x>
+     <y>623</y>
     </hint>
    </hints>
   </connection>
  </connections>
  <slots>
-  <slot>regression()</slot>
+  <slot>start()</slot>
+  <slot>generate()</slot>
  </slots>
 </ui>
