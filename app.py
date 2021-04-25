@@ -69,22 +69,25 @@ def reg(features, t, target, dcm):
 def savefig(coef, intercept):
     x_data = range(1,31,5)
     y_data = [coef * x +intercept for x in x_data]
+    plt.clf()
     plt.figure('Grid', figsize = (6,6),dpi = 100)
     plt.title("校准曲线",fontsize=20, fontproperties="SimHei")
     plt.xlabel("风表示值Vz（格） ",fontsize=14, fontproperties="SimHei")
     plt.ylabel("实际风速值Vs（m/s)",fontsize=14, fontproperties="SimHei")
+    plt.yticks(y_data)
     ax = plt.gca()
     ax.xaxis.set_major_locator(plt.MultipleLocator(5.0))
-    ax.xaxis.set_minor_locator(plt.MultipleLocator(1))
-    ax.yaxis.set_major_locator(plt.MultipleLocator(5.0))
-    ax.yaxis.set_minor_locator(plt.MultipleLocator(1))
+    ax.xaxis.set_minor_locator(plt.MultipleLocator(2.5))
+    ax.yaxis.set_major_locator(plt.MultipleLocator(20.0))
+    ax.yaxis.set_minor_locator(plt.MultipleLocator(10))
+    
     #紧凑布局
     plt.tight_layout()
     ax.grid(which='major',axis="both",linewidth=0.25,linestyle='-',color='gray')
     ax.grid(which='minor',axis="both",linewidth=0.25,linestyle='-',color='gray')
     plt.plot(x_data, y_data)
     plt.legend()
-    plt.savefig('plt.png')
+    plt.savefig('tem/plt.png')
 
 
 def fnum(code):
@@ -201,8 +204,9 @@ class MainForm(QMainWindow,Ui_MainWindow):
                     self.para[i][3].setText('-')
             
             html = self.tohtml(config, formula)
-            with open("report/html.html", "w", encoding='utf-8')as htmlf:
+            with open("tem/tem", "w", encoding='utf-8')as htmlf:
                 htmlf.write(html)
+                
             reportWindow.__init__()
             reportWindow.show()
 
@@ -218,9 +222,9 @@ class MainForm(QMainWindow,Ui_MainWindow):
 
     def tohtml(self, config, formula):
         html_para = [
-        self.para[0][3](),
-        self.self.para[0][3].text(),
-        self.self.para[0][2].text(),
+        self.input_03.text(),
+        self.input_03.text(),
+        self.input_02.text(),
         self.para[1][3].text(),
         self.para[2][3].text(),
         self.para[3][3].text(),
@@ -380,11 +384,9 @@ class ReportForm(QDialog,Ui_reportwin):
     def __init__(self):
         super(ReportForm, self).__init__()
         self.setupUi(self)
-        #global html
-        #self.browser.setHtml(html)
         #time.sleep(1)
         #self.screen_shot()
-        self.browser.load(QUrl('file:///report/html.html'))
+        self.browser.load(QUrl('file:///tem/tem'))
     def screen_shot(self):
         screen = QApplication.primaryScreen()
         winid = self.browser.winId()
@@ -419,10 +421,10 @@ if __name__ == '__main__':
     company_s = encrypt.encrypt(load_conf()['company'], key, 0)
     
     print(company_s)
-
-#加编号
-#命名规则
-#公司名称设置 加密算法https://blog.csdn.net/weixin_40406241/article/details/89321011
+#测量点 报告
+#~加编号
+#~命名规则
+#~公司名称设置 加密算法https://blog.csdn.net/weixin_40406241/article/details/89321011
 #帮助
 #pdf https://blog.csdn.net/BobYuan888/article/details/108769274
 #图标
