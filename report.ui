@@ -6,33 +6,36 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>501</width>
-    <height>703</height>
+    <width>752</width>
+    <height>1052</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <widget class="QWebEngineView" name="webEngineView">
+  <widget class="QWebEngineView" name="browser">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>500</width>
-     <height>700</height>
+     <width>750</width>
+     <height>1100</height>
     </rect>
    </property>
    <property name="minimumSize">
     <size>
-     <width>500</width>
-     <height>700</height>
+     <width>750</width>
+     <height>1100</height>
     </size>
    </property>
    <property name="maximumSize">
     <size>
-     <width>500</width>
-     <height>700</height>
+     <width>1000</width>
+     <height>1100</height>
     </size>
+   </property>
+   <property name="contextMenuPolicy">
+    <enum>Qt::NoContextMenu</enum>
    </property>
    <property name="url">
     <url>

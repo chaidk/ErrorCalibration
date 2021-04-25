@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>539</width>
-    <height>167</height>
+    <height>161</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -147,15 +147,15 @@
    <sender>buttonBox</sender>
    <signal>accepted()</signal>
    <receiver>configwin</receiver>
-   <slot>accept()</slot>
+   <slot>setConfig()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>248</x>
-     <y>254</y>
+     <x>529</x>
+     <y>260</y>
     </hint>
     <hint type="destinationlabel">
-     <x>157</x>
-     <y>166</y>
+     <x>457</x>
+     <y>155</y>
     </hint>
    </hints>
   </connection>
@@ -166,28 +166,12 @@
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>316</x>
-     <y>260</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>286</x>
-     <y>166</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>buttonBox</sender>
-   <signal>accepted()</signal>
-   <receiver>configwin</receiver>
-   <slot>setConfig()</slot>
-   <hints>
-    <hint type="sourcelabel">
      <x>496</x>
      <y>30</y>
     </hint>
     <hint type="destinationlabel">
-     <x>420</x>
-     <y>107</y>
+     <x>447</x>
+     <y>155</y>
     </hint>
    </hints>
   </connection>

@@ -1,6 +1,7 @@
 from PyQt5.QtWidgets import *
-from PyQt5.QtCore import pyqtSlot,  QUrl
+from PyQt5.QtCore import pyqtSlot,  QUrl, QSizeF
 from PyQt5 import QtGui
+from PyQt5.QtPrintSupport import QPrinter
 from numpy.lib.function_base import append, percentile
 from Ui_MainWindow import Ui_MainWindow,QtCore
 from Ui_config import Ui_configwin,QtCore
@@ -8,13 +9,22 @@ from Ui_report import Ui_reportwin,QtCore
 
 import pandas as pd
 import numpy as np
-import sys, os, json, datetime
+import sys, os, json, datetime, time
 from scipy.sparse.linalg import interface
 from sklearn.linear_model import LinearRegression
 from matplotlib import pyplot as plt
 from decimal import Decimal
 
 import encrypt
+
+# def html_print(browser):
+#     printer = QPrinter()
+#     printer.setPageSizeMM(QSizeF(750, 1050))
+#     browser.page().print(printer, print_compele())
+
+# def print_compele():
+#     print('print_compele')
+
 def load_conf():
     with open('config.json', 'r', encoding='utf8') as fp:
         conf = json.load(fp)
@@ -36,10 +46,10 @@ def to_decimal(num, exp="0.00") -> Decimal:
         num = str(num)
     return Decimal(num).quantize(exp=Decimal(exp))
 
-def reg(features, time, target, dcm):
+def reg(features, t, target, dcm):
     err = []
     model = LinearRegression()
-    features = [a/b for a,b in zip(features, time)] 
+    features = [a/b for a,b in zip(features, t)] 
     df_features = pd.DataFrame(features).values.reshape(-1, 1)
     df_target = pd.DataFrame(target)
     model.fit(df_features, df_target)
@@ -145,14 +155,13 @@ class MainForm(QMainWindow,Ui_MainWindow):
 
     def start(self):
         try:
-            configWindow.show()
             config = load_conf()
             index = config['index']
             num = fnum(config['code'])
             self.input_03.setText(num)
             features = []
             target = []
-            time = []
+            t = []
             len_data = 5
             if not self.para[0][0].text():
                 dcm = "0.00"
@@ -163,16 +172,16 @@ class MainForm(QMainWindow,Ui_MainWindow):
             for i in range(1,9):
                 print(features)
                 if not self.para[i][0].text():
-                    if i < 6:
+                    if i < 3:
                         self.para[i][0].setText('输入数据不完整')
                         return '输入数据不完整'
                     
                 else:
                     features.append(float(self.para[i][0].text()))
                     if not self.para[i][1].text():
-                        time.append(60)
+                        t.append(60)
                     else:
-                        time.append(float(self.para[i][1].text()))
+                        t.append(float(self.para[i][1].text()))
 
                     if not self.para[i][2].text():
                         target.append(i*2)
@@ -180,7 +189,8 @@ class MainForm(QMainWindow,Ui_MainWindow):
                         target.append(float(self.para[i][2].text()))
                 
             print(features, target)
-            intercept, coef, err = reg(features, time, target, dcm)
+            intercept, coef, err = reg(features, t, target, dcm)
+            #savefig(float(intercept), float(coef))
             #self.para[1][3].setText(str(intercept))
             #self.para[2][3].setText(str(coef))
             for i in range(1,9):
@@ -188,8 +198,9 @@ class MainForm(QMainWindow,Ui_MainWindow):
                     self.para[i][3].setText(err.pop(0))
                 else:
                     self.para[i][3].setText('-')
-                
-            #reportWindow.show()
+            
+            reportWindow.__init__()
+            reportWindow.show()
 
         except Exception as e:
             print(repr(e))
@@ -200,7 +211,7 @@ class MainForm(QMainWindow,Ui_MainWindow):
 
 class ConfigForm(QDialog,Ui_configwin):
     def __init__(self):
-        super(ConfigForm, self).__init__()        
+        super(ConfigForm, self).__init__()    
         self.key = '16968'
         self.setupUi(self)
         
@@ -210,14 +221,13 @@ class ConfigForm(QDialog,Ui_configwin):
         inputc_validator = QtGui.QRegExpValidator(input_reg)
         self.code.setValidator(input_validator)
         self.company.setValidator(inputc_validator)
-
         config = load_conf()
         company_s = encrypt.encrypt(config['para'], self.key, 0)
         self.company.setText(company_s)
         self.code.setText(config['code'])
     
     def setConfig(self):
-        print(self.company.text(), self.code.text(), self.pwd.text())
+        #print(self.company.text(), self.code.text(), self.pwd.text())
         set_conf(self.company.text(), self.code.text(), self.pwd.text())
 
 
@@ -228,6 +238,19 @@ class ReportForm(QDialog,Ui_reportwin):
     def __init__(self):
         super(ReportForm, self).__init__()
         self.setupUi(self)
+        self.browser.load(QUrl('file:///test.html'))
+        #self.browser.setHtml(the_html)
+        time.sleep(1)
+        #html_print(self.browser)
+        self.screen_shot()
+    def screen_shot(self):
+        screen = QApplication.primaryScreen()
+        winid = self.browser.winId()
+        pix = screen.grabWindow(int(winid))
+        print(int(winid))
+        name = 'scr.png'
+        pix.save(name)
+
 
 
 if __name__ == '__main__':
@@ -237,6 +260,8 @@ if __name__ == '__main__':
     configWindow = ConfigForm()
     reportWindow = ReportForm()
     win.show()
+    configWindow.__init__()
+    configWindow.show()
     sys.exit(app.exec_())
 
     formula = '校准曲线公式： V实=%s+%s×V示'%(to_decimal(intercept, dcm), to_decimal(coef, dcm))

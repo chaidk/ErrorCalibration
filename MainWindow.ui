@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>973</width>
-    <height>562</height>
+    <height>551</height>
    </rect>
   </property>
   <property name="font">
@@ -961,7 +961,7 @@ border-color: rgb(255, 255, 255);
     </hint>
     <hint type="destinationlabel">
      <x>844</x>
-     <y>624</y>
+     <y>525</y>
     </hint>
    </hints>
   </connection>
@@ -993,7 +993,7 @@ border-color: rgb(255, 255, 255);
     </hint>
     <hint type="destinationlabel">
      <x>712</x>
-     <y>623</y>
+     <y>525</y>
     </hint>
    </hints>
   </connection>
