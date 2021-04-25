@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>973</width>
-    <height>763</height>
+    <height>562</height>
    </rect>
   </property>
   <property name="font">
@@ -795,6 +795,9 @@ border-color: rgb(255, 255, 255);
            <family>微软雅黑</family>
            <pointsize>16</pointsize>
           </font>
+         </property>
+         <property name="inputMethodHints">
+          <set>Qt::ImhNone</set>
          </property>
          <property name="text">
           <string/>

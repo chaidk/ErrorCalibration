@@ -11,7 +11,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(973, 763)
+        MainWindow.resize(973, 562)
         font = QtGui.QFont()
         font.setPointSize(20)
         MainWindow.setFont(font)
@@ -434,6 +434,7 @@ class Ui_MainWindow(object):
         font.setFamily("微软雅黑")
         font.setPointSize(16)
         self.input_01.setFont(font)
+        self.input_01.setInputMethodHints(QtCore.Qt.ImhNone)
         self.input_01.setText("")
         self.input_01.setObjectName("input_01")
         self.gridLayout_3.addWidget(self.input_01, 1, 1, 1, 1)

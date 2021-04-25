@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Dialog</class>
- <widget class="QDialog" name="Dialog">
+ <class>configwin</class>
+ <widget class="QDialog" name="configwin">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
     <width>539</width>
-    <height>138</height>
+    <height>167</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -35,28 +35,12 @@
      <x>30</x>
      <y>10</y>
      <width>361</width>
-     <height>116</height>
+     <height>150</height>
     </rect>
    </property>
    <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="0">
-     <widget class="QLabel" name="label_14">
-      <property name="font">
-       <font>
-        <family>微软雅黑</family>
-        <pointsize>16</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>公司名称</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-      </property>
-     </widget>
-    </item>
     <item row="0" column="1">
-     <widget class="QLineEdit" name="input_01">
+     <widget class="QLineEdit" name="company">
       <property name="font">
        <font>
         <family>微软雅黑</family>
@@ -71,8 +55,8 @@
       </property>
      </widget>
     </item>
-    <item row="1" column="1">
-     <widget class="QLineEdit" name="input_2">
+    <item row="3" column="1">
+     <widget class="QLineEdit" name="pwd">
       <property name="font">
        <font>
         <family>微软雅黑</family>
@@ -90,7 +74,7 @@
       </property>
      </widget>
     </item>
-    <item row="1" column="0">
+    <item row="3" column="0">
      <widget class="QLabel" name="label_16">
       <property name="font">
        <font>
@@ -106,6 +90,54 @@
       </property>
      </widget>
     </item>
+    <item row="0" column="0">
+     <widget class="QLabel" name="label_14">
+      <property name="font">
+       <font>
+        <family>微软雅黑</family>
+        <pointsize>16</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>公司名称</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QLabel" name="label_15">
+      <property name="font">
+       <font>
+        <family>微软雅黑</family>
+        <pointsize>16</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>证书编号</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="1">
+     <widget class="QLineEdit" name="code">
+      <property name="font">
+       <font>
+        <family>微软雅黑</family>
+        <pointsize>16</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="placeholderText">
+       <string/>
+      </property>
+     </widget>
+    </item>
    </layout>
   </widget>
  </widget>
@@ -114,7 +146,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>accepted()</signal>
-   <receiver>Dialog</receiver>
+   <receiver>configwin</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -123,14 +155,14 @@
     </hint>
     <hint type="destinationlabel">
      <x>157</x>
-     <y>274</y>
+     <y>166</y>
     </hint>
    </hints>
   </connection>
   <connection>
    <sender>buttonBox</sender>
    <signal>rejected()</signal>
-   <receiver>Dialog</receiver>
+   <receiver>configwin</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -139,9 +171,28 @@
     </hint>
     <hint type="destinationlabel">
      <x>286</x>
-     <y>274</y>
+     <y>166</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>accepted()</signal>
+   <receiver>configwin</receiver>
+   <slot>setConfig()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>496</x>
+     <y>30</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>420</x>
+     <y>107</y>
     </hint>
    </hints>
   </connection>
  </connections>
+ <slots>
+  <slot>setConfig()</slot>
+ </slots>
 </ui>

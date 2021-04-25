@@ -3,6 +3,8 @@ from PyQt5.QtCore import pyqtSlot,  QUrl
 from PyQt5 import QtGui
 from numpy.lib.function_base import append, percentile
 from Ui_MainWindow import Ui_MainWindow,QtCore
+from Ui_config import Ui_configwin,QtCore
+from Ui_report import Ui_reportwin,QtCore
 
 import pandas as pd
 import numpy as np
@@ -17,13 +19,15 @@ def load_conf():
     with open('config.json', 'r', encoding='utf8') as fp:
         conf = json.load(fp)
         return conf
-def set_conf(conf):
-    with open('config.json', 'w', encoding='utf8') as fp:
-        conf = json.dump(conf, fp, ensure_ascii=False)
-def set_company(name):
+def set_conf(company, code, pwd):
     conf =load_conf()
-    conf['company'] = name
-    set_conf(conf)
+    conf['para'] = company
+    conf['code'] = code
+    if pwd == 'pwd16968':
+        with open('config.json', 'w', encoding='utf8') as fp:
+            conf = json.dump(conf, fp, ensure_ascii=False)
+    else:
+        print('密码错误')
         
 def to_decimal(num, exp="0.00") -> Decimal:
     if not num:
@@ -50,13 +54,8 @@ def reg(features, time, target, dcm):
     #print(to_decimal(intercept, dcm), to_decimal(coef, dcm), err)
     return to_decimal(intercept, dcm), to_decimal(coef, dcm), err
 
-def error(x):
-    y = coef * features[x][0] + intercept
-    err =  abs((y - target[x]))
-    err = str(to_decimal(err, dcm))
-    return err
 
-def savefig():
+def savefig(coef, intercept):
     x_data = range(1,31,5)
     y_data = coef * x_data +intercept
     plt.figure('Grid', figsize = (6,6),dpi = 100)
@@ -77,14 +76,14 @@ def savefig():
     plt.savefig('plt.png')
     plt.show()
 
-def fnum():
+def fnum(code):
     num = 1
     td = datetime.datetime.today().strftime('%Y%m%d')
     flist = os.listdir('report')
     for fname in flist:
         if fname[0:8].find(td) is not -1:
             num+=1
-    fnum = 'JZFB' + td + '%02d'%num
+    fnum = code + td + '%02d'%num
     return fnum
 class MainForm(QMainWindow,Ui_MainWindow):
     def __init__(self):
@@ -146,9 +145,10 @@ class MainForm(QMainWindow,Ui_MainWindow):
 
     def start(self):
         try:
+            configWindow.show()
             config = load_conf()
             index = config['index']
-            num = fnum()
+            num = fnum(config['code'])
             self.input_03.setText(num)
             features = []
             target = []
@@ -165,7 +165,7 @@ class MainForm(QMainWindow,Ui_MainWindow):
                 if not self.para[i][0].text():
                     if i < 6:
                         self.para[i][0].setText('输入数据不完整')
-                        return False
+                        return '输入数据不完整'
                     
                 else:
                     features.append(float(self.para[i][0].text()))
@@ -183,75 +183,65 @@ class MainForm(QMainWindow,Ui_MainWindow):
             intercept, coef, err = reg(features, time, target, dcm)
             #self.para[1][3].setText(str(intercept))
             #self.para[2][3].setText(str(coef))
-            for i,e in enumerate(err):
-                self.para[i+1][3].setText(e)
             for i in range(1,9):
-                try:
-                    self.para[i][3].setText(err[i-1])
-                except:
+                if self.para[i][0].text():
+                    self.para[i][3].setText(err.pop(0))
+                else:
                     self.para[i][3].setText('-')
-
-
-
-
-
-
-            
-                    
                 
+            #reportWindow.show()
+
         except Exception as e:
-            # self.intercept.setText(str(e))
-            # self.coef.setText(repr(e))
             print(repr(e))
 
     def generate(self):
         pass
 
 
+class ConfigForm(QDialog,Ui_configwin):
+    def __init__(self):
+        super(ConfigForm, self).__init__()        
+        self.key = '16968'
+        self.setupUi(self)
+        
+        input_reg = QtCore.QRegExp(r"[a-zA-Z0-9]{6}")
+        input_validator = QtGui.QRegExpValidator(input_reg)
+        inputc_reg = QtCore.QRegExp(r".{32}")
+        inputc_validator = QtGui.QRegExpValidator(input_reg)
+        self.code.setValidator(input_validator)
+        self.company.setValidator(inputc_validator)
+
+        config = load_conf()
+        company_s = encrypt.encrypt(config['para'], self.key, 0)
+        self.company.setText(company_s)
+        self.code.setText(config['code'])
+    
+    def setConfig(self):
+        print(self.company.text(), self.code.text(), self.pwd.text())
+        set_conf(self.company.text(), self.code.text(), self.pwd.text())
+
+
+
+
+
+class ReportForm(QDialog,Ui_reportwin):
+    def __init__(self):
+        super(ReportForm, self).__init__()
+        self.setupUi(self)
+
 
 if __name__ == '__main__':
 
     app = QApplication(sys.argv)
     win = MainForm()
+    configWindow = ConfigForm()
+    reportWindow = ReportForm()
     win.show()
     sys.exit(app.exec_())
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-    features = np.array([300 ,399, 498, 595, 690]).reshape(-1,1)
-    target = [2, 4, 6, 8, 10]
-    features = features / 60
-    dcm = '0.00'
-    
-
-
-    intercept, coef = reg()
-    lerror = []
-    for i in range(0,5):
-        lerror.append(error(i))
-    print(lerror)
     formula = '校准曲线公式： V实=%s+%s×V示'%(to_decimal(intercept, dcm), to_decimal(coef, dcm))
     print(formula)
     #savefig()
-
-
 
 #加密
     company = '临汾开成设备检测有限公司'
@@ -263,15 +253,6 @@ if __name__ == '__main__':
     company_s = encrypt.encrypt(load_conf()['company'], key, 0)
     
     print(company_s)
-
-#序号
-    conf = load_conf()
-    
-    
-    fname = fnum()
-    print(fname)
-
-
 
 #加编号
 #命名规则
