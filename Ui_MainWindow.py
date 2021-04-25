@@ -11,7 +11,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(973, 562)
+        MainWindow.resize(973, 551)
         font = QtGui.QFont()
         font.setPointSize(20)
         MainWindow.setFont(font)
@@ -494,6 +494,7 @@ class Ui_MainWindow(object):
         self.btn_reg.clicked.connect(MainWindow.start)
         self.action_4.triggered.connect(MainWindow.close)
         self.btn_gen.clicked.connect(MainWindow.generate)
+        self.action_2.triggered.connect(MainWindow.configuration)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
         MainWindow.setTabOrder(self.input_01, self.input_02)
         MainWindow.setTabOrder(self.input_02, self.input_03)

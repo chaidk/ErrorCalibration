@@ -11,7 +11,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_configwin(object):
     def setupUi(self, configwin):
         configwin.setObjectName("configwin")
-        configwin.resize(539, 167)
+        configwin.resize(539, 161)
         self.buttonBox = QtWidgets.QDialogButtonBox(configwin)
         self.buttonBox.setGeometry(QtCore.QRect(450, 20, 81, 241))
         self.buttonBox.setOrientation(QtCore.Qt.Vertical)
@@ -77,10 +77,11 @@ class Ui_configwin(object):
         self.gridLayout.addWidget(self.code, 1, 1, 1, 1)
 
         self.retranslateUi(configwin)
-        self.buttonBox.accepted.connect(configwin.accept)
-        self.buttonBox.rejected.connect(configwin.reject)
         self.buttonBox.accepted.connect(configwin.setConfig)
+        self.buttonBox.rejected.connect(configwin.reject)
         QtCore.QMetaObject.connectSlotsByName(configwin)
+        configwin.setTabOrder(self.company, self.code)
+        configwin.setTabOrder(self.code, self.pwd)
 
     def retranslateUi(self, configwin):
         _translate = QtCore.QCoreApplication.translate

@@ -141,6 +141,11 @@
    </layout>
   </widget>
  </widget>
+ <tabstops>
+  <tabstop>company</tabstop>
+  <tabstop>code</tabstop>
+  <tabstop>pwd</tabstop>
+ </tabstops>
  <resources/>
  <connections>
   <connection>
