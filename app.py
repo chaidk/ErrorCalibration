@@ -26,7 +26,7 @@ import encrypt
 
 
 def load_conf():
-    with open('config.json', 'r', encoding='utf8') as fp:
+    with open('app/config.json', 'r', encoding='utf8') as fp:
         conf = json.load(fp)
         return conf
 
@@ -37,13 +37,13 @@ def set_conf(company, code, pwd, key):
     conf['para'] = company_h
     conf['code'] = code
     if pwd == 'pwd16968':
-        with open('config.json', 'w', encoding='utf8') as fp:
+        with open('app/config.json', 'w', encoding='utf8') as fp:
             conf = json.dump(conf, fp, ensure_ascii=False)
-            alertWindow.__init__('修改完成', '修改完成')
+            alertWindow.__init__('修改完成！', '修改完成')
             alertWindow.show()
             print('修改完成')
     else:
-        alertWindow.__init__('密码错误', '修改完成')
+        alertWindow.__init__('密码错误！', '修改完成')
         alertWindow.show()
         print('密码错误')
 
@@ -79,16 +79,20 @@ def savefig(coef, intercept, x_data, y_data):
     print(x_data, coef, intercept)
     print(y_data)
     plt.clf()
-    plt.figure('Grid', figsize=(6, 6), dpi=100)
+    plt.figure('Grid', figsize=(6, 4), dpi=100)
     plt.title("校准曲线", fontsize=20, fontproperties="SimHei")
     plt.xlabel("风表示值Vz（格/s） ", fontsize=14, fontproperties="SimHei")
     plt.ylabel("实际风速值Vs（m/s)", fontsize=14, fontproperties="SimHei")
     plt.yticks(y_data)
     ax = plt.gca()
-    ax.xaxis.set_major_locator(plt.MultipleLocator(1))
-    ax.xaxis.set_minor_locator(plt.MultipleLocator(0.5))
-    ax.yaxis.set_major_locator(plt.MultipleLocator(1))
-    ax.yaxis.set_minor_locator(plt.MultipleLocator(0.5))
+    xmaj = round(x_data[-1])/10
+    xmin = round(x_data[-1])/50
+    ymaj = round(y_data[-1])/10
+    ymin = round(y_data[-1])/50
+    ax.xaxis.set_major_locator(plt.MultipleLocator(xmaj))
+    ax.xaxis.set_minor_locator(plt.MultipleLocator(xmin))
+    ax.yaxis.set_major_locator(plt.MultipleLocator(ymaj))
+    ax.yaxis.set_minor_locator(plt.MultipleLocator(ymin))
 
     # 紧凑布局
     plt.tight_layout()
@@ -229,15 +233,15 @@ class MainForm(QMainWindow, Ui_MainWindow):
 
     def generate(self):
         try:
-
             html = self.tohtml(self.config, self.formula)
             with open("app/temdata002", "w", encoding='utf-8')as htmlf:
                 htmlf.write(html)
-
             reportWindow.__init__()
             reportWindow.show()
         except Exception as e:
             print(repr(e))
+            alertWindow.__init__('请先执行校准！', '警告')
+            alertWindow.show()
 
     def configuration(self):
         configWindow.__init__()
@@ -283,7 +287,127 @@ Copyright ©2020 DKC. All rights reserved.
             encrypt.encrypt(config['para'], '16968', 0)
         ]
         html_text = """
-                <!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><title>校准结果</title></head><style>    .container{        width: 700px;                height: 1000px;        margin-left: auto;        margin-right: auto;        border: 1px black solid;        overflow: hidden;    }    .title{        width: 600px;        overflow: hidden;        padding: 0;        word-break:break-all;        margin-left: auto;        margin-right: auto;        padding-top: 50px;    }    .title>h1{        text-align: center;        line-height: 20px;        padding-left: 20px;        padding-right: 20px;    }    p{        line-height: 15px;        padding-left: 20px;        padding-right: 20px;    }    .tab{        width: 600px;        padding: 0;        word-break:break-all;        margin-left: auto;        margin-right: auto;    }    table{        border-collapse: collapse;        text-align: center;        padding: 2px;    }    .figure{        width: 500px;        height: 500px;        padding-left: 50px;        padding-right: 50px;            }    .head{        width: 120px;        height: 40px;    }    .para{        width: 60px;        height: 40px;    }    footer{        text-align: center;    }</style><body><div class="container"><div class="title"><h1>校准结果</h1><h1>RESULTS OF CALIBRATIONS</h1><p><strong>证书编号：%s</strong></h2><p>Certificate  No:%s</h2><p>1、起动风速：%s m/s</p><p>2、非线性误差的绝对值列表</p></div><div class="tab"><table border="1"><tr><td class="head">项目检测点</td><td class="para">1</td><td class="para">2</td><td class="para">3</td><td class="para">4</td><td class="para">5</td><td class="para">6</td><td class="para">7</td><td class="para">8</td></tr><tr><td class="head">非线性误差绝对值(m/s)</td><td class="para">%s</td><td class="para">%s</td><td class="para">%s</td><td class="para">%s</td><td class="para">%s</td><td class="para">%s</td><td class="para">%s</td><td class="para">%s</td></tr></table><p>3.校准结果</p><img class="figure" src="temdata001"><p>校准曲线公式：%s</p></div><footer><p>%s</p></footer></div></body></html>
+                <!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <title>校准结果</title>
+</head>
+<style>
+    .container {
+        padding-top: 5px;
+        width: 610px;
+        height: 800px;
+        margin-left: auto;
+        margin-right: auto;
+        border: 1px black solid;
+        overflow: hidden;
+    }
+
+    .title {
+        width: 500px;
+        overflow: hidden;
+        padding: 0;
+        word-break: break-all;
+        margin-left: auto;
+        margin-right: auto;
+        padding-top: 20px;
+    }
+
+    .title>h1 {
+        text-align: center;
+        line-height: 20px;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    p {
+        line-height: 12px;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .tab {
+        width: 500px;
+        padding: 0;
+        word-break: break-all;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    table {
+        border-collapse: collapse;
+        text-align: center;
+        padding: 1px;
+    }
+
+    .figure {
+        width: 500px;
+        height: 350px;
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+
+    .head {
+        width: 120px;
+        height: 30px;
+    }
+
+    .para {
+        width: 60px;
+        height: 30px;
+    }
+
+    p.footer {
+        padding-top: 10px;
+        text-align: center;
+    }
+</style>
+
+<body>
+    <div class="container">
+        <div class="title">
+            <h1>校准结果</h1>
+            <h1>RESULTS OF CALIBRATIONS</h1>
+        </div>
+        <div class="tab">
+            <p><strong>证书编号：%s</strong></h2>
+            <p>Certificate No:%s</h2>
+            <p>1、起动风速：%s m/s</p>
+            <p>2、非线性误差的绝对值列表</p>
+            <table border="1">
+                <tr>
+                    <td class="head">项目检测点</td>
+                    <td class="para">1</td>
+                    <td class="para">2</td>
+                    <td class="para">3</td>
+                    <td class="para">4</td>
+                    <td class="para">5</td>
+                    <td class="para">6</td>
+                    <td class="para">7</td>
+                    <td class="para">8</td>
+                </tr>
+                <tr>
+                    <td class="head">非线性误差绝对值(m/s)</td>
+                    <td class="para">%s</td>
+                    <td class="para">%s</td>
+                    <td class="para">%s</td>
+                    <td class="para">%s</td>
+                    <td class="para">%s</td>
+                    <td class="para">%s</td>
+                    <td class="para">%s</td>
+                    <td class="para">%s</td>
+                </tr>
+            </table>
+            <p>3.校准结果</p><img class="figure" src="temdata001">
+            <p>校准曲线公式：%s</p>
+        </div>
+        <p class="footer">%s</p>
+    </div>
+</body>
+
+</html>
         """ % tuple((html_para))
         return html_text
 
@@ -320,9 +444,12 @@ class ReportForm(QDialog, Ui_reportwin):
         screen = QApplication.primaryScreen()
         winid = self.browser.winId()
         pix = screen.grabWindow(int(winid))
-        # print(int(winid))
-        name = 'scr.png'
-        pix.save(name)
+        name = 'report/report.png'
+        try:
+            os.remove('app/temdata001')
+            os.remove('app/temdata002')
+        except:
+            pass
 
 
 class AlertForm(QDialog, Ui_alertwin):
@@ -337,7 +464,6 @@ class HelpForm(QDialog, Ui_helpwin):
     def __init__(self, t):
         super(HelpForm, self).__init__()
         self.setupUi(self)
-        # self.content.setText(t)
 
 
 if __name__ == '__main__':
@@ -351,26 +477,3 @@ if __name__ == '__main__':
     helpWindow = HelpForm('帮助')
     win.show()
     sys.exit(app.exec_())
-
-    formula = '校准曲线公式： V实=%s+%s×V示' % (to_decimal(intercept,
-                                                  dcm), to_decimal(coef, dcm))
-    print(formula)
-    # savefig()
-
-# 加密
-    company = '临汾开成设备检测有限公司'
-    key = '16968'
-    company_h = encrypt.encrypt(company, key, 1)
-    print(company_h)
-    set_company(company_h)
-
-    company_s = encrypt.encrypt(load_conf()['company'], key, 0)
-
-    print(company_s)
-# ~测量点 报告
-# ~加编号
-# ~命名规则
-# ~公司名称设置 加密算法https://blog.csdn.net/weixin_40406241/article/details/89321011
-# 帮助
-# pdf https://blog.csdn.net/BobYuan888/article/details/108769274
-# 图标
