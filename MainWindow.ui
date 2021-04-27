@@ -6,9 +6,27 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>973</width>
-    <height>551</height>
+    <width>980</width>
+    <height>560</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>980</width>
+    <height>560</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>980</width>
+    <height>560</height>
+   </size>
   </property>
   <property name="font">
    <font>
@@ -852,7 +870,7 @@ border-color: rgb(255, 255, 255);
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>973</width>
+     <width>980</width>
      <height>23</height>
     </rect>
    </property>
@@ -899,7 +917,7 @@ border-color: rgb(255, 255, 255);
   </action>
   <action name="action_6">
    <property name="text">
-    <string>使用指南</string>
+    <string>使用说明</string>
    </property>
   </action>
   <action name="action_8">
@@ -1013,10 +1031,44 @@ border-color: rgb(255, 255, 255);
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>action_6</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>help()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>486</x>
+     <y>279</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_8</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>about()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>486</x>
+     <y>279</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>start()</slot>
   <slot>generate()</slot>
   <slot>configuration()</slot>
+  <slot>about()</slot>
+  <slot>help()</slot>
  </slots>
 </ui>

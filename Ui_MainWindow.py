@@ -8,10 +8,20 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
+import ctypes
+ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID("myappid")
+
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(973, 551)
+        MainWindow.resize(980, 560)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(MainWindow.sizePolicy().hasHeightForWidth())
+        MainWindow.setSizePolicy(sizePolicy)
+        MainWindow.setMinimumSize(QtCore.QSize(980, 560))
+        MainWindow.setMaximumSize(QtCore.QSize(980, 560))
         font = QtGui.QFont()
         font.setPointSize(20)
         MainWindow.setFont(font)
@@ -458,7 +468,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_2.addLayout(self.gridLayout_3)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 973, 23))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 980, 23))
         self.menubar.setObjectName("menubar")
         self.menu = QtWidgets.QMenu(self.menubar)
         self.menu.setObjectName("menu")
@@ -495,6 +505,8 @@ class Ui_MainWindow(object):
         self.action_4.triggered.connect(MainWindow.close)
         self.btn_gen.clicked.connect(MainWindow.generate)
         self.action_2.triggered.connect(MainWindow.configuration)
+        self.action_6.triggered.connect(MainWindow.help)
+        self.action_8.triggered.connect(MainWindow.about)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
         MainWindow.setTabOrder(self.input_01, self.input_02)
         MainWindow.setTabOrder(self.input_02, self.input_03)

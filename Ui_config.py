@@ -8,10 +8,23 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
+import ctypes
+ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID("myappid")
+
 class Ui_configwin(object):
     def setupUi(self, configwin):
         configwin.setObjectName("configwin")
-        configwin.resize(539, 161)
+        configwin.resize(540, 160)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(configwin.sizePolicy().hasHeightForWidth())
+        configwin.setSizePolicy(sizePolicy)
+        configwin.setMinimumSize(QtCore.QSize(540, 160))
+        configwin.setMaximumSize(QtCore.QSize(540, 160))
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap("icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        configwin.setWindowIcon(icon)
         self.buttonBox = QtWidgets.QDialogButtonBox(configwin)
         self.buttonBox.setGeometry(QtCore.QRect(450, 20, 81, 241))
         self.buttonBox.setOrientation(QtCore.Qt.Vertical)
@@ -78,14 +91,14 @@ class Ui_configwin(object):
 
         self.retranslateUi(configwin)
         self.buttonBox.accepted.connect(configwin.setConfig)
-        self.buttonBox.rejected.connect(configwin.reject)
+        self.buttonBox.rejected.connect(configwin.close)
         QtCore.QMetaObject.connectSlotsByName(configwin)
         configwin.setTabOrder(self.company, self.code)
         configwin.setTabOrder(self.code, self.pwd)
 
     def retranslateUi(self, configwin):
         _translate = QtCore.QCoreApplication.translate
-        configwin.setWindowTitle(_translate("configwin", "Dialog"))
+        configwin.setWindowTitle(_translate("configwin", "设置"))
         self.label_16.setText(_translate("configwin", "修改密码"))
         self.label_14.setText(_translate("configwin", "公司名称"))
         self.label_15.setText(_translate("configwin", "证书编号"))

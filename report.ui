@@ -6,32 +6,54 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>752</width>
-    <height>1052</height>
+    <width>770</width>
+    <height>1085</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>770</width>
+    <height>1085</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>770</width>
+    <height>1085</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>icon.png</normaloff>icon.png</iconset>
+  </property>
   <widget class="QWebEngineView" name="browser">
    <property name="geometry">
     <rect>
-     <x>0</x>
+     <x>10</x>
      <y>0</y>
      <width>750</width>
-     <height>1100</height>
+     <height>1050</height>
     </rect>
    </property>
    <property name="minimumSize">
     <size>
      <width>750</width>
-     <height>1100</height>
+     <height>1050</height>
     </size>
    </property>
    <property name="maximumSize">
     <size>
      <width>1000</width>
-     <height>1100</height>
+     <height>1050</height>
     </size>
    </property>
    <property name="contextMenuPolicy">
@@ -43,6 +65,19 @@
     </url>
    </property>
   </widget>
+  <widget class="QPushButton" name="pushButton">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>1050</y>
+     <width>751</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>生成报告</string>
+   </property>
+  </widget>
  </widget>
  <customwidgets>
   <customwidget>
@@ -52,5 +87,25 @@
   </customwidget>
  </customwidgets>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>pushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>reportwin</receiver>
+   <slot>screen_shot()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>176</x>
+     <y>114</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>283</x>
+     <y>-14</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>screen_shot()</slot>
+ </slots>
 </ui>
