@@ -9,6 +9,7 @@ pandas = "*"
 matplotlib = "*"
 pyqt5 = "==5.10.1"
 scikit-learn = "==0.19.2"
+setuptools = "*"
 
 [dev-packages]
 

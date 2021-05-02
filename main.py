@@ -210,12 +210,8 @@ class MainForm(QMainWindow, Ui_MainWindow):
                         self.t.append(60)
                     else:
                         self.t.append(float(self.para[i][1].text()))
-                    if not self.para[i][2].text():
-                        self.target.append(i*2)
-                    else:
-                        self.target.append(float(self.para[i][2].text()))
-                    self.features.append(
-                        float(self.para[i][0].text())/float(self.t[i-1]))
+                    self.target.append(float(self.para[i][2].text()))
+                    self.features.append(float(self.para[i][0].text())/float(self.t[i-1]))
             self.intercept, self.coef, self.err = reg(
                 self.features, self.t, self.target, self.dcm)
             self.formula = 'V实=%s+%s×V示' % (self.intercept, self.coef)
