@@ -162,7 +162,7 @@ class MainForm(QMainWindow, Ui_MainWindow):
         ]
 
         dcm_reg = QtCore.QRegExp(r"0\.[0]{4}")
-        int_reg = QtCore.QRegExp(r"[0-9]{6}")
+        int_reg = QtCore.QRegExp(r"[0-9]{4}")
         float_reg = QtCore.QRegExp(r"[0-9]{1,4}\.[0-9]{4}")
         input_reg = QtCore.QRegExp(r"[a-zA-Z0-9]{16}")
         dcm_validator = QtGui.QRegExpValidator(dcm_reg)
@@ -204,6 +204,10 @@ class MainForm(QMainWindow, Ui_MainWindow):
                 if not self.para[i][0].text():
                     if i < 6:
                         self.para[i][0].setText('输入数据不完整')
+                        return '输入数据不完整'
+                if not self.para[i][2].text():
+                    if i < 6:
+                        self.para[i][2].setText('输入数据不完整')
                         return '输入数据不完整'
                 else:
                     if not self.para[i][1].text():
