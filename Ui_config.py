@@ -23,7 +23,7 @@ class Ui_configwin(object):
         configwin.setMinimumSize(QtCore.QSize(540, 160))
         configwin.setMaximumSize(QtCore.QSize(540, 160))
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap("icon.ico"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         configwin.setWindowIcon(icon)
         self.buttonBox = QtWidgets.QDialogButtonBox(configwin)
         self.buttonBox.setGeometry(QtCore.QRect(450, 20, 81, 241))

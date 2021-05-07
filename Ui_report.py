@@ -23,7 +23,7 @@ class Ui_reportwin(object):
         reportwin.setMinimumSize(QtCore.QSize(650, 860))
         reportwin.setMaximumSize(QtCore.QSize(650, 860))
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap("icon.ico"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         reportwin.setWindowIcon(icon)
         reportwin.setAutoFillBackground(True)
         reportwin.setStyleSheet("")

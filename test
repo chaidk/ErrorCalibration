@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <title>校准结果</title>
+</head>
+<style>
+    .container {
+        padding-top: 5px;
+        width: 610px;
+        height: 800px;
+        margin-left: auto;
+        margin-right: auto;
+        border: 1px black solid;
+        overflow: hidden;
+    }
+
+    .title {
+        width: 500px;
+        overflow: hidden;
+        padding: 0;
+        word-break: break-all;
+        margin-left: auto;
+        margin-right: auto;
+        padding-top: 20px;
+    }
+
+    .title>h1 {
+        text-align: center;
+        line-height: 20px;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    p {
+        line-height: 12px;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .tab {
+        width: 500px;
+        padding: 0;
+        word-break: break-all;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    table {
+        border-collapse: collapse;
+        text-align: center;
+        padding: 1px;
+    }
+
+    .figure {
+        width: 500px;
+        height: 350px;
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+
+    .head {
+        width: 120px;
+        height: 30px;
+    }
+
+    .para {
+        width: 60px;
+        height: 30px;
+    }
+
+    p.footer {
+        padding-top: 10px;
+        text-align: center;
+    }
+</style>
+<body>
+    <div class="container">
+        <div class="title">
+            <h1>校准结果</h1>
+            <h1>RESULTS OF CALIBRATIONS</h1>
+        </div>
+        <div class="tab">
+            <p><strong>证书编号：%s</strong></h2>
+            <p>Certificate No:%s</h2>
+            <p>1、起动风速：%s m/s</p>
+            <p>2、非线性误差的绝对值列表</p>
+            <table border="1">
+                <tr>
+                    <td class="head">项目检测点</td>
+                    <td class="para">1</td>
+                    <td class="para">2</td>
+                    <td class="para">3</td>
+                    <td class="para">4</td>
+                    <td class="para">5</td>
+                    <td class="para">6</td>
+                    <td class="para">7</td>
+                    <td class="para">8</td>
+                </tr>
+                <tr>
+                    <td class="head">非线性误差绝对值(m/s)</td>
+                    <td class="para">%s</td>
+                    <td class="para">%s</td>
+                    <td class="para">%s</td>
+                    <td class="para">%s</td>
+                    <td class="para">%s</td>
+                    <td class="para">%s</td>
+                    <td class="para">%s</td>
+                    <td class="para">%s</td>
+                </tr>
+            </table>
+            <p>3.校准结果</p><img class="figure" src="temdata001">
+            <p>校准曲线公式：%s</p>
+        </div>
+        <p class="footer">%s</p>
+    </div>
+</body>
+<script>window.print()</script>
+
+</html>

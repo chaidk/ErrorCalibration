@@ -29,7 +29,7 @@ class Ui_helpwin(object):
         helpwin.setFont(font)
         helpwin.setCursor(QtGui.QCursor(QtCore.Qt.ArrowCursor))
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap("icon.ico"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         helpwin.setWindowIcon(icon)
         helpwin.setAutoFillBackground(False)
         helpwin.setStyleSheet("background-color:rgb(255, 255, 255)")

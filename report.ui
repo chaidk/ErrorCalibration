@@ -33,7 +33,7 @@
   </property>
   <property name="windowIcon">
    <iconset>
-    <normaloff>icon.png</normaloff>icon.png</iconset>
+    <normaloff>icon.ico</normaloff>icon.ico</iconset>
   </property>
   <property name="autoFillBackground">
    <bool>true</bool>
@@ -119,5 +119,6 @@
  </connections>
  <slots>
   <slot>screen_shot()</slot>
+  <slot>delete()</slot>
  </slots>
 </ui>

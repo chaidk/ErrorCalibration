@@ -13,7 +13,7 @@ from pandas import DataFrame
 #import sys
 from sys import argv,exit
 #import os
-from os import remove,rename,listdir
+from os import remove,rename,listdir,system
 #import json
 from json import load,dump
 #import datetime
@@ -232,7 +232,7 @@ class MainForm(QMainWindow, Ui_MainWindow):
     def generate(self):
         try:
             html = self.tohtml(self.config, self.formula)
-            with open("app/temdata002", "w", encoding='utf-8')as htmlf:
+            with open("app/temdata002.html", "w", encoding='utf-8')as htmlf:
                 htmlf.write(html)
             reportWindow.__init__()
             reportWindow.show()
@@ -404,6 +404,7 @@ Copyright ©2020 DKC. All rights reserved.
         <p class="footer">%s</p>
     </div>
 </body>
+<script>window.print()</script>
 
 </html>
         """ % tuple((html_para))
@@ -436,7 +437,7 @@ class ReportForm(QDialog, Ui_reportwin):
     def __init__(self):
         super(ReportForm, self).__init__()
         self.setupUi(self)
-        self.browser.load(QUrl('file:///app/temdata002'))
+        self.browser.load(QUrl('file:///app/temdata002.html'))
 
     def screen_shot(self):
         try:
@@ -447,17 +448,18 @@ class ReportForm(QDialog, Ui_reportwin):
             filename = fnum(config['code'])
             name = 'report/%s.png'%filename
             pix.save(name)
-            alertWindow.__init__('文件保存位置：report/%s.'%filename, '保存成功')
+            alertWindow.__init__('文件保存位置：report/%s.是否直接打印？'%filename, '保存成功')
+            alertWindow.buttonBox.accepted.connect(self.prt)
             alertWindow.show()
-            try:
-                remove('app/temdata001')
-                remove('app/temdata002')
-            except:
-                pass
         except:
-            
             alertWindow.__init__('保存失败！', '保存失败')
             alertWindow.show()
+    def prt(self):
+        
+        try:
+            system('cd app && temdata002.html')
+        except:
+            print('print err')
 
 
 class AlertForm(QDialog, Ui_alertwin):
@@ -476,12 +478,11 @@ class HelpForm(QDialog, Ui_helpwin):
 
 if __name__ == '__main__':
 
-    global html
     app = QApplication(argv)
     win = MainForm()
+    win.show()
     configWindow = ConfigForm()
     reportWindow = ReportForm()
     alertWindow = AlertForm('提示', '标题')
     helpWindow = HelpForm('帮助')
-    win.show()
     exit(app.exec_())
