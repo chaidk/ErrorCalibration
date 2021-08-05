@@ -172,7 +172,7 @@ class MainForm(QMainWindow, Ui_MainWindow):
         for i in range(1, 9):
             self.para[i][0].setValidator(float_validator)
             self.para[i][1].setValidator(int_validator)
-            self.para[i][2].setValidator(int_validator)
+            self.para[i][2].setValidator(float_validator)
 
     def start(self):
         try:
@@ -199,11 +199,11 @@ class MainForm(QMainWindow, Ui_MainWindow):
                 self.para[i][3].setText('')
             for i in range(1, 9):
                 if not self.para[i][0].text():
-                    if i < 6:
+                    if i < 4:
                         self.para[i][0].setText('输入数据不完整')
                         return '输入数据不完整'
                 if not self.para[i][2].text():
-                    if i < 6:
+                    if i < 4:
                         self.para[i][2].setText('输入数据不完整')
                         return '输入数据不完整'
                 else:
@@ -370,7 +370,7 @@ Copyright ©2020 DKC. All rights reserved.
         <div class="tab">
             <p><strong>证书编号：%s</strong></h2>
             <p>Certificate No:%s</h2>
-            <p>1、起动风速：%s m/s</p>
+            <p>1、启动风速：%s m/s</p>
             <p>2、非线性误差的绝对值列表</p>
             <table border="1">
                 <tr>

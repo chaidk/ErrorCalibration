@@ -533,7 +533,7 @@ border-color: rgb(255, 255, 255);
           <string/>
          </property>
          <property name="placeholderText">
-          <string>必填</string>
+          <string>选填</string>
          </property>
         </widget>
        </item>
@@ -612,7 +612,7 @@ border-color: rgb(255, 255, 255);
           <string/>
          </property>
          <property name="placeholderText">
-          <string>必填</string>
+          <string>选填</string>
          </property>
         </widget>
        </item>
